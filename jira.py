@@ -8,12 +8,12 @@ from flask import Flask, request
 app = Flask(__name__)
 
 # Define a route that handles GET requests
-@app.route('/github-webhook', methods=['POST'])
+@app.route('/github-webhook', methods=['POST'])   # provide any name instead of /github-webhook
 def createJira():
     github_payload = request.json
-    body = github_payload['comment']['body']
+    body = github_payload['comment']['body']  # it will provide the /jira comment as payload output
 
-    url = "https://sourav-hunter.atlassian.net/rest/api/3/issue"
+    url = "https://sourav-hunter.atlassian.net/rest/api/3/issue"  # change the url 
 
     API_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
@@ -42,7 +42,7 @@ def createJira():
              "version": 1
         },
         "project": {
-           "key": "PLATFORM"
+           "key": "PLATFORM"  # change the key according to your jira project
         },
         "issuetype": {
             "id": "10006"
@@ -60,7 +60,7 @@ def createJira():
             auth=auth
         )
     else:
-        return 'Failed to create Jira issue', 500
+        return 'Invalid input', 500
     return json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": "))
 
 if __name__ == '__main__':
